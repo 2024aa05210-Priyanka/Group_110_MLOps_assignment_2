@@ -1,14 +1,14 @@
 # Web framework (TensorFlow-compatible)
-fastapi==0.95.2
-uvicorn==0.22.0
+fastapi
+uvicorn
 
 # ML
-tensorflow==2.13.0
-numpy==1.24.3
+tensorflow
+numpy
 
-pillow==10.2.0
-scikit-learn==1.3.2
+pillow
+scikit-learn
 
 # Experiment tracking
-mlflow==2.10.0
-pytest==7.4.4
+mlflow
+pytest
