@@ -12,3 +12,4 @@ scikit-learn
 # Experiment tracking
 mlflow
 pytest
+httpx==0.27.0
