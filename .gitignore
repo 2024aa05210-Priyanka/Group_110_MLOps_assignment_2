@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual envs
+mlops/
+.venv/
+
+# Data & ML artifacts
+data/
+models/
+mlruns/
+mlflow.db
+dvc_storage/
+confusion_matrix.png
+
+# DVC cache
+.dvc/cache/
+
+# OS
+.DS_Store
+Thumbs.db
