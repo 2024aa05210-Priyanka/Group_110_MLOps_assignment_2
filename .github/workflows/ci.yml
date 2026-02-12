@@ -60,28 +60,44 @@ jobs:
       - name: Pull latest image
         run: docker pull $IMAGE_NAME:latest
 
-      # Instead of docker-compose (not installed), run container directly
+      # Remove old container if exists (prevents failure on rerun)
+      - name: Remove existing container (if any)
+        run: docker rm -f cats-dogs-api || true
+
+      # Run container
       - name: Run container
         run: |
           docker run -d -p 8000:8000 --name cats-dogs-api $IMAGE_NAME:latest
 
-      # Wait until API is actually ready
+      # Wait until API is ready (max 60s)
       - name: Wait until API is ready
         run: |
           for i in {1..12}; do
-            curl -s http://localhost:8000/health && break
+            if curl -s http://localhost:8000/health > /dev/null; then
+              echo "API is ready!"
+              exit 0
+            fi
             echo "Waiting for API..."
             sleep 5
           done
+          echo "API did not start in time"
+          docker logs cats-dogs-api
+          exit 1
 
-      # Print container logs (helps debugging if failure happens)
+      # Show logs (helps debugging)
       - name: Show container logs
         run: docker logs cats-dogs-api || true
 
+      # Smoke Test - Health
       - name: Smoke Test - Health Check
         run: curl --fail http://localhost:8000/health
 
+      # Smoke Test - Prediction
       - name: Smoke Test - Prediction
         run: |
           curl --fail -X POST "http://localhost:8000/predict" \
           -F "file=@tests/sample.jpg"
+
+      # Stop container after tests
+      - name: Stop container
+        run: docker rm -f cats-dogs-api
