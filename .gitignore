@@ -7,7 +7,7 @@ mlops/
 .venv/
 
 # Data & ML artifacts
-data/
+/data/
 models/
 mlruns/
 mlflow.db
