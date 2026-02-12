@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir \
     mlflow==2.10.0
 
 COPY src ./src
-COPY models ./models
+#COPY models ./models
 
 EXPOSE 8000
 
