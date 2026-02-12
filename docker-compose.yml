@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  cats-dogs-api:
+    image: ghcr.io/2024aa05210-priyanka/group_110_mlops_assignment_2/cats-dogs-api:latest
+    container_name: cats-dogs-api
+    ports:
+      - "8000:8000"
+    restart: always
