@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+  packages: write
+
 env:
   IMAGE_NAME: ghcr.io/2024aa05210-priyanka/group_110_mlops_assignment_2/cats-dogs-api
 
@@ -40,6 +44,7 @@ jobs:
       - name: Push Docker image
         run: docker push $IMAGE_NAME:latest
 
+
   deploy:
     needs: build-test
     runs-on: ubuntu-latest
@@ -49,21 +54,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Pull latest image
         run: docker pull $IMAGE_NAME:latest
 
-      - name: Deploy with Docker Compose
+      # Instead of docker-compose (not installed), run container directly
+      - name: Run container
         run: |
-          docker compose up -d
+          docker run -d -p 8000:8000 --name cats-dogs-api $IMAGE_NAME:latest
 
-      - name: Wait for container to start
-        run: sleep 10
+      # Wait until API is actually ready
+      - name: Wait until API is ready
+        run: |
+          for i in {1..12}; do
+            curl -s http://localhost:8000/health && break
+            echo "Waiting for API..."
+            sleep 5
+          done
+
+      # Print container logs (helps debugging if failure happens)
+      - name: Show container logs
+        run: docker logs cats-dogs-api || true
 
       - name: Smoke Test - Health Check
-        run: |
-          curl --fail http://localhost:8000/health
+        run: curl --fail http://localhost:8000/health
 
       - name: Smoke Test - Prediction
         run: |
-          curl -X POST "http://localhost:8000/predict" \
+          curl --fail -X POST "http://localhost:8000/predict" \
           -F "file=@tests/sample.jpg"
