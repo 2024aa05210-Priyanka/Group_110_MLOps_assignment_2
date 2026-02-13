@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir \
     scikit-learn==1.3.2
 
 COPY src ./src
-
+#COPY models ./models
 EXPOSE 8000
 
 CMD ["uvicorn", "src.inference.app:app", "--host", "0.0.0.0", "--port", "8000"]
