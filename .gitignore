@@ -8,7 +8,7 @@ mlops/
 
 # Data & ML artifacts
 /data/
-models/
+#models/
 mlruns/
 mlflow.db
 dvc_storage/
@@ -20,3 +20,5 @@ confusion_matrix.png
 # OS
 .DS_Store
 Thumbs.db
+
+cnn_baseline.h5
