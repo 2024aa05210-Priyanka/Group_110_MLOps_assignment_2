@@ -88,12 +88,12 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
 
-
-Start server:
-
+## Start server:
+```
 uvicorn src.inference.app:app --reload
-
+```
 
 ## Open API docs:
 
@@ -102,19 +102,19 @@ http://localhost:8000/docs
 ## Option 2 — Run with Docker (Recommended)
 
 Build image:
-
+```
 docker build -t cats-dogs-api .
-
+```
 
 Run container:
-
+```
 docker run -d -p 8000:8000 cats-dogs-api
-
+```
 
 Access:
-
+```
 http://localhost:8000/health
-
+```
 ## API Endpoints
 Health Check
 GET /health
@@ -130,7 +130,7 @@ Predict
 POST /predict
 
 
-Request (multipart form):
+## Request (multipart form):
 
 curl -X POST "http://localhost:8000/predict" \
 -F "file=@sample.jpg"
@@ -176,7 +176,7 @@ Deploy container
 
 Run smoke tests (health + prediction)
 
-Pipeline config:
+## Pipeline config:
 
 .github/workflows/ci.yml
 
