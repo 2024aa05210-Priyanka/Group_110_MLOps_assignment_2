@@ -46,6 +46,7 @@ Deployment + Smoke Tests
 ---
 
 ##  Repository Structure
+```
 ├── src/
 │ ├── data/
 │ │ └── preprocess.py
@@ -66,7 +67,7 @@ Deployment + Smoke Tests
 ├── pytest.ini
 └── README.md
 
-
+```
 ---
 
 ##  Model Details
