@@ -24,6 +24,7 @@ The system follows real-world ML system design principles.
 ---
 
 ##  System Architecture
+```
 Raw Data
 ↓
 Preprocessing
@@ -41,6 +42,7 @@ Docker Container
 GitHub Actions CI/CD
 ↓
 Deployment + Smoke Tests
+```
 
 
 ---
